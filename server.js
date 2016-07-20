@@ -1,4 +1,6 @@
 var express = require('express');
+var bodyParser = require('body-parser');
+var jsonParser = bodyParser.json();
 
 var Storage = function() {
     this.items = [];
@@ -26,7 +28,7 @@ app.get('/items/', function(req, res) {
 });
 
 
-//app.post
+app.post
 app.post('/items', jsonParser, function(req, res) {
     if (!req.body) {
         return res.sendStatus(400);
@@ -36,23 +38,9 @@ app.post('/items', jsonParser, function(req, res) {
     res.status(201).json(item);
 });
 //app.put
-app.put('/items', jsonParser, function(req, res){
-    if (!req.body) {
-        return res.sendStatus(400);
-    }
 
-    var item = storage.edit(req.body.name);
-    res.status(201).json(item);
-});
 //app.delete
-app.delete('/items', jsonParser, function(req, res){
-    if (!req.body) {
-        return res.sendStatus(400);
-    }
 
-    var item = storage.delete(req.body.name);
-    res.status(201).json(item);
-});
 
 
 
