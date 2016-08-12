@@ -21,15 +21,16 @@ var storage = new Storage();
 storage.add('Broad beans');
 storage.add('Tomatoes');
 storage.add('Peppers');
+storage.add('Kale');
 
 
 app.use(express.static('public'));
-
+//APP GET
 app.get('/items/', function(req, res) {
     res.json(storage.items);
 });
 
-//app post
+//APP POST
 app.post('/items', jsonParser, function (req, res) {
 
     if (req.body) {
@@ -39,7 +40,7 @@ app.post('/items', jsonParser, function (req, res) {
         res.sendStatus(400);
     }
 });
-//app.put
+//APP.PUT
 app.put('/items/:id', function (req, res) {
 
     var id = parseInt(req.params.id);
@@ -52,7 +53,7 @@ app.put('/items/:id', function (req, res) {
         }
     }
 });
-//app.delete
+//APP.DELETE
 app.delete('/items/:id', function (req, res) {
 
     var id = parseInt(req.params.id);
@@ -65,5 +66,8 @@ app.delete('/items/:id', function (req, res) {
 });
 
 app.listen(process.env.PORT || 8080, function (){
-	console.log('servers is running on port' + 8080)
+	console.log('servers is running on port' + 8080);
 });
+
+exports.app = app;
+exports.storage = storage;
