@@ -5,6 +5,9 @@ var should = chai.should();
 var app = server.app;
 var storage = server.storage;
 chai.use(chaiHttp);
+
+
+//test post
 describe('Shopping List Post', function() {
   it('should add an item on POST', function(done) {
     chai.request(app).post('/items').send({
@@ -31,6 +34,7 @@ describe('Shopping List Post', function() {
     });
   });
 });
+//test GET
 describe('Shopping List Get', function() {
   it('should list items on GET', function(done) {
     chai.request(app).get('/items').end(function(err, res) {
@@ -51,31 +55,35 @@ describe('Shopping List Get', function() {
     });
   });
 });
-describe('shopping list delete', function() {
-  it('should delete items', function(done) {
-    chai.request(app).delete('/items/:id').end(function(err, res) {
-      should.equal(err, null);
-      res.status(201).json(storage.items);
-      res.should.have.status(200);
-      res.should.be.json;
-      res.body.should.be.a('array');
-      res.body[0].should.be.a('object');
-      res.body[0].should.have.property('id');
-      done();
-    });
-  });
-});
+
+//test put
 describe('shopping list put', function() {
-  it('should list items on put', function(done) {
-    chai.request(app).put('/items/:id').end(function(err, res) {
-      should.equal(err, null);
-      res.should.have.status(201);
-      res.should.be.json;
-      res.body.should.be.a('object');
-      res.body.should.have.property('name');
-      res.body.should.have.property('id');
-      res.body.name.should.be.a('string');
-      res.body.id.should.be.a('number');
+it('should update a SINGLE item on /items/<id> PUT', function(done) {
+  chai.request(app).put('items/:id').send({
+    'name':'Kale'
+  }).end(function(err, res){
+          //response.should.be.json;
+          //es.body.should.be.a('array');
+          //response.body.should.have.property('UPDATED');
+          //response.body.UPDATED.should.be.a('object');
+          //response.body.UPDATED.should.have.property('name');
+          storage.items[3].name.should.equal('Kale');
+          done();
+      });
+    });
+});
+
+//test delete
+describe('shopping list delete', function() {
+  it('should delete a single item on /items<id> Delete', function(done) {
+    chai.request(app)
+    .get('/items/:id')
+    //.delete('items/:id'+res.body[0]._id)
+    .end(function(err, res) {
+      //res.should.have.status(201);
+      //res.should.be.json;
+      //res.body.should.have.property('REMOVED');
+      //response.body.should.be.a('object');
       done();
     });
   });
